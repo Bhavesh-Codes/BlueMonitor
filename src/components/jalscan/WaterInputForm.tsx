@@ -48,6 +48,22 @@ import {
     getTierBadgeClass,
 } from '@/lib/water-logic';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import { Map as MapIcon } from 'lucide-react';
+import WaterTreatmentDetailModal from './WaterTreatmentDetailModal';
+
+const LocationPickerMap = dynamic(() => import('@/components/ui/LocationPickerMap'), {
+
+    ssr: false,
+    loading: () => (
+        <div className="h-[400px] w-full flex items-center justify-center bg-muted/20 animate-pulse rounded-xl">
+            <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <span>Loading Map...</span>
+            </div>
+        </div>
+    ),
+});
 
 // Parameter configuration for sliders
 const PARAMETER_CONFIG = {
@@ -134,6 +150,7 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
 
     // Location state
     const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+    const [showMap, setShowMap] = useState(false);
     const [isPublic, setIsPublic] = useState(true);
     const [notes, setNotes] = useState('');
 
@@ -148,6 +165,7 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
     } | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [locationError, setLocationError] = useState<string | null>(null);
+    const [selectedTreatment, setSelectedTreatment] = useState<string | null>(null);
 
     // Handle parameter change
     const handleParamChange = (key: keyof WaterParameters, value: number) => {
@@ -484,9 +502,9 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
                                 <div className="relative h-64 md:h-80 w-full overflow-hidden">
                                     <Image
                                         src={`/images/tier_${result.classification.tier}_${result.classification.tier === 1 ? 'pure' :
-                                                result.classification.tier === 2 ? 'household' :
-                                                    result.classification.tier === 3 ? 'conditioned' :
-                                                        result.classification.tier === 4 ? 'industrial' : 'biohazard'
+                                            result.classification.tier === 2 ? 'household' :
+                                                result.classification.tier === 3 ? 'conditioned' :
+                                                    result.classification.tier === 4 ? 'industrial' : 'biohazard'
                                             }.png`}
                                         alt={`Tier ${result.classification.tier}`}
                                         fill
@@ -598,6 +616,79 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
                                                     )}
                                                 </div>
                                             </div>
+
+                                            {/* Location Picker Moved Here */}
+                                            <div className="bg-muted/10 p-6 rounded-[2rem] border border-border mt-6">
+                                                <div className="flex flex-col gap-4">
+                                                    <div className="flex items-center justify-between">
+                                                        <div className="flex items-center gap-2">
+                                                            <MapPin className="w-4 h-4 text-primary" />
+                                                            <span className="text-sm font-medium">Report Location</span>
+                                                        </div>
+                                                        <div className="flex gap-2">
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={handleGetLocation}
+                                                            >
+                                                                <MapPin className="w-3 h-3 mr-1" />
+                                                                Auto
+                                                            </Button>
+                                                            <Button
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => setShowMap(!showMap)}
+                                                            >
+                                                                <MapIcon className="w-3 h-3 mr-1" />
+                                                                {showMap ? 'Hide Map' : 'Select on Map'}
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Map Picker UI */}
+                                                    <AnimatePresence>
+                                                        {showMap && (
+                                                            <motion.div
+                                                                initial={{ height: 0, opacity: 0 }}
+                                                                animate={{ height: 'auto', opacity: 1 }}
+                                                                exit={{ height: 0, opacity: 0 }}
+                                                                className="overflow-hidden"
+                                                            >
+                                                                <div className="h-[300px] w-full rounded-xl overflow-hidden border border-border shadow-inner">
+                                                                    <LocationPickerMap
+                                                                        initialLocation={location}
+                                                                        onLocationSelect={(loc) => {
+                                                                            setLocation(loc);
+                                                                        }}
+                                                                        onClose={() => setShowMap(false)}
+                                                                    />
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+
+                                                    {location ? (
+                                                        <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border">
+                                                            <span className="text-sm text-muted-foreground">Selected:</span>
+                                                            <Badge variant="outline" className="text-green-600 bg-green-500/10 border-green-500/20">
+                                                                <CheckCircle2 className="w-3 h-3 mr-1" />
+                                                                {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
+                                                            </Badge>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+                                                            <p className="text-xs text-yellow-600 flex items-center gap-2">
+                                                                <AlertTriangle className="w-3 h-3" />
+                                                                Location required for public reports.
+                                                            </p>
+                                                        </div>
+                                                    )}
+
+                                                    {locationError && (
+                                                        <p className="text-xs text-red-400">{locationError}</p>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -615,11 +706,17 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
                                                         {/* Timeline Dot */}
                                                         <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-background border-4 border-blue-500" />
 
-                                                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 bg-muted/20 p-6 rounded-2xl hover:bg-muted/40 transition-colors">
-                                                            <div>
+                                                        <div
+                                                            className="flex flex-col md:flex-row md:items-start justify-between gap-6 bg-muted/20 p-6 rounded-2xl hover:bg-muted/40 transition-colors cursor-pointer group hover:border-primary/20 border border-transparent"
+                                                            onClick={() => setSelectedTreatment(step.method)}
+                                                        >
+                                                            <div className="w-full">
                                                                 <div className="flex items-center gap-3 mb-2">
                                                                     <Badge className="bg-blue-500">Step {idx + 1}</Badge>
-                                                                    <h4 className="text-lg font-bold">{step.method}</h4>
+                                                                    <h4 className="text-lg font-bold group-hover:text-primary transition-colors flex items-center gap-2">
+                                                                        {step.method}
+                                                                        <Info className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                                                                    </h4>
                                                                 </div>
                                                                 <p className="text-muted-foreground mb-4 max-w-2xl">
                                                                     {step.description}
@@ -682,13 +779,19 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
                                             Download PDF
                                         </Button>
                                     </div>
-
                                 </div>
                             </motion.div>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Treatment Detail Modal */}
+            <WaterTreatmentDetailModal
+                isOpen={!!selectedTreatment}
+                onClose={() => setSelectedTreatment(null)}
+                methodName={selectedTreatment || ''}
+            />
         </div>
     );
 }
