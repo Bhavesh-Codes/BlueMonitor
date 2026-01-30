@@ -63,7 +63,7 @@ export default function LocationPickerMap({
 
     return (
         <div className="flex flex-col h-full w-full bg-background rounded-xl overflow-hidden border border-border">
-            <div className="relative flex-1 min-h-[400px]">
+            <div className="relative flex-1 min-h-[200px]">
                 <MapContainer
                     center={defaultCenter}
                     zoom={5}

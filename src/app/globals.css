@@ -90,3 +90,74 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground));
 }
+
+/* ================================================
+   JalMap - Custom Tier Marker Styles
+   ================================================ */
+
+/* Remove default Leaflet divIcon background and border */
+.custom-tier-marker {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Override Leaflet's default marker icon styles */
+.leaflet-marker-icon.custom-tier-marker {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Ensure the div icon container is clean */
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.tier-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  background: transparent;
+}
+
+.tier-marker:hover {
+  transform: scale(1.1);
+}
+
+/* Pulsing animation for Tier 5 (Biohazard) markers */
+@keyframes pulse-danger {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+.marker-tier-5 {
+  animation: pulse-danger 1.5s ease-in-out infinite;
+}
+
+/* Glow effect for danger markers */
+.marker-tier-5 svg path {
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+}
+
+/* Ensure leaflet popups/tooltips are styled consistently */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  font-family: var(--font-sans), Arial, sans-serif;
+}
+
+.leaflet-popup-tip {
+  background: white;
+}

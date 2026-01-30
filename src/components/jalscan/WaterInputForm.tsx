@@ -654,10 +654,11 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
                                                                 exit={{ height: 0, opacity: 0 }}
                                                                 className="overflow-hidden"
                                                             >
-                                                                <div className="h-[300px] w-full rounded-xl overflow-hidden border border-border shadow-inner">
+                                                                <div className="h-[450px] w-full rounded-xl overflow-hidden border border-border shadow-inner">
                                                                     <LocationPickerMap
                                                                         initialLocation={location}
                                                                         onLocationSelect={(loc) => {
+                                                                            console.log('Location selected:', loc);
                                                                             setLocation(loc);
                                                                         }}
                                                                         onClose={() => setShowMap(false)}

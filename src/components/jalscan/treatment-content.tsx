@@ -24,6 +24,7 @@ export interface TreatmentDetail {
     benefits: string[];
     drawbacks: string[];
     visComponent: React.FC;
+    imagePath?: string;
     stats: {
         label: string;
         value: number;
@@ -115,50 +116,114 @@ const ActivatedCarbonVisual = () => {
 // 2. UV Sterilization Animation
 const UVSterilizationVisual = () => {
     return (
-        <div className="relative w-full h-full bg-black overflow-hidden rounded-xl border border-gray-800">
-            {/* UV Lamp */}
-            <div className="absolute top-[10%] left-[10%] right-[10%] h-[10%] bg-purple-900 rounded-full shadow-[0_0_30px_rgba(168,85,247,0.6)] z-10 flex items-center justify-center">
-                <div className="w-[90%] h-[40%] bg-purple-200 rounded-full blur-[2px]"></div>
-            </div>
+        <div className="relative w-full h-full bg-slate-900 overflow-hidden rounded-xl border border-slate-800 flex items-center justify-center">
 
-            {/* UV Rays */}
-            <motion.div
-                className="absolute top-[15%] left-0 right-0 bottom-0 bg-gradient-to-b from-purple-500/20 to-transparent z-0"
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
+            {/* Background Grid */}
+            <div className="absolute inset-0 opacity-20"
+                style={{
+                    backgroundImage: 'linear-gradient(rgba(168, 85, 247, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)',
+                    backgroundSize: '20px 20px'
+                }}
             />
 
-            {/* Bacteria Logic */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-                {/* Live Bacteria Entering */}
-                {Array.from({ length: 8 }).map((_, i) => (
-                    <motion.div
-                        key={`bug-${i}`}
-                        className="absolute w-6 h-6 text-green-500"
-                        initial={{ y: -50, x: Math.random() * 200 - 100, rotate: 0 }}
-                        animate={{ y: 400, rotate: 360 }}
-                        transition={{ duration: 4, repeat: Infinity, delay: i * 0.5, ease: "linear" }}
-                    >
-                        <motion.div
-                            // Zap effect when passing UV zone (approx y=100)
-                            animate={{ scale: [1, 1.5, 0], opacity: [1, 1, 0], color: "#ef4444" }}
-                            transition={{ duration: 0.5, delay: (i * 0.5) + 1, repeat: Infinity, repeatDelay: 3.5 }}
-                        >
-                            <div className="relative">
-                                <span className="absolute -top-2 -left-1 text-xs">🦠</span>
-                                <Zap className="w-4 h-4 absolute -top-1 -right-2 text-yellow-400 opacity-0"
-                                    style={{ opacity: 1 }}
-                                />
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                ))}
+            {/* Central UV Lamp Tube */}
+            <div className="absolute inset-y-0 w-16 bg-gradient-to-r from-purple-900/50 via-purple-500/20 to-purple-900/50 backdrop-blur-sm border-x border-purple-500/30 z-10">
+                {/* Glowing Core */}
+                <motion.div
+                    className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-2 bg-purple-100 shadow-[0_0_30px_rgba(192,132,252,0.8)] rounded-full"
+                    animate={{ opacity: [0.8, 1, 0.8], boxShadow: ['0 0 20px rgba(192,132,252,0.6)', '0 0 40px rgba(192,132,252,1)', '0 0 20px rgba(192,132,252,0.6)'] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
             </div>
 
-            <div className="absolute bottom-4 left-0 right-0 text-center">
-                <span className="text-purple-300 font-mono text-xs tracking-widest px-3 py-1 bg-purple-900/50 rounded border border-purple-500/30">
-                    UV-C RADIATION ZONE
-                </span>
+            {/* Radiation Waves */}
+            {Array.from({ length: 3 }).map((_, i) => (
+                <motion.div
+                    key={`wave-${i}`}
+                    className="absolute inset-y-0 w-20 bg-purple-500/10 border-x border-purple-400/20 z-0"
+                    initial={{ scaleX: 1, opacity: 0 }}
+                    animate={{ scaleX: [1, 4], opacity: [0.5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.6, ease: "easeOut" }}
+                />
+            ))}
+
+            {/* Bacteria/DNA Stream */}
+            <div className="absolute inset-0 z-20 overflow-hidden">
+                {Array.from({ length: 6 }).map((_, i) => {
+                    const randomX = Math.random() * 80 - 40; // Spread around center
+                    const delay = i * 1.2;
+
+                    return (
+                        <motion.div
+                            key={`pathogen-${i}`}
+                            className="absolute left-1/2 flex flex-col items-center justify-center w-12 h-12"
+                            style={{ x: randomX }}
+                            initial={{ y: -60, opacity: 0, scale: 0.8 }}
+                            animate={{ y: 400, opacity: [0, 1, 1, 0] }}
+                            transition={{ duration: 5, repeat: Infinity, delay: delay, ease: "linear" }}
+                        >
+                            {/* Pathogen Body */}
+                            <motion.div
+                                className="w-10 h-10 rounded-full bg-green-900/40 border border-green-500/50 flex items-center justify-center relative shadow-[0_0_10px_rgba(34,197,94,0.3)]"
+                                animate={{
+                                    borderColor: ["rgba(34,197,94,0.5)", "rgba(107,114,128,0.5)"], // Green -> Gray
+                                    backgroundColor: ["rgba(20,83,45,0.4)", "rgba(55,65,81,0.4)"], // Dark Green -> Dark Gray
+                                    boxShadow: ["0 0 10px rgba(34,197,94,0.3)", "none"]
+                                }}
+                                transition={{ duration: 0.5, delay: delay + 2.2 }} // Change color mid-stream (approx at UV lamp)
+                            >
+                                {/* DNA Strand Representation (Simulated) */}
+                                <div className="relative w-6 h-4 flex items-center justify-center gap-1">
+                                    {/* DNA Helix - Left */}
+                                    <motion.div
+                                        className="w-1 h-4 bg-green-400 rounded-full"
+                                        animate={{ backgroundColor: ["#4ade80", "#9ca3af"], height: ["16px", "16px"] }} // Break logic handled by rotation
+                                        transition={{ duration: 0.5, delay: delay + 2.2 }}
+                                    />
+                                    {/* DNA Helix - Crossbar (Breaks) */}
+                                    <motion.div
+                                        className="w-3 h-0.5 bg-green-400"
+                                        initial={{ opacity: 1, rotate: 0 }}
+                                        animate={{ opacity: 0, rotate: 45 }} // Breaks
+                                        transition={{ duration: 0.1, delay: delay + 2.2 }}
+                                    />
+                                    {/* DNA Helix - Right */}
+                                    <motion.div
+                                        className="w-1 h-4 bg-green-400 rounded-full"
+                                        animate={{ backgroundColor: ["#4ade80", "#9ca3af"] }}
+                                        transition={{ duration: 0.5, delay: delay + 2.2 }}
+                                    />
+                                </div>
+
+                                {/* Zap Icon Overlay */}
+                                <motion.div
+                                    className="absolute -top-2 -right-2 text-yellow-400 drop-shadow-md"
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: [0, 1, 0], scale: [0.5, 1.5, 0.5] }}
+                                    transition={{ duration: 0.4, delay: delay + 2.2 }}
+                                >
+                                    <Zap className="w-6 h-6 fill-yellow-400" />
+                                </motion.div>
+                            </motion.div>
+
+                            {/* Text feedback */}
+                            <motion.span
+                                className="absolute top-12 text-[10px] font-bold text-red-500 whitespace-nowrap bg-black/80 px-1 rounded border border-red-500/30"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: [0, 1, 0], y: [0, 10] }}
+                                transition={{ duration: 1, delay: delay + 2.2 }}
+                            >
+                                DNA DENATURED
+                            </motion.span>
+                        </motion.div>
+                    )
+                })}
+            </div>
+
+            {/* Bottom Label */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-purple-950/80 px-4 py-1.5 rounded-full border border-purple-500/30 shadow-lg z-30">
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
+                <span className="text-purple-200 text-xs font-bold tracking-wider">UV-C 254nm</span>
             </div>
         </div>
     )
@@ -599,6 +664,7 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
             "Over time, trapped bacteria can grow on the filter"
         ],
         visComponent: ActivatedCarbonVisual,
+        imagePath: "/report images/1.acitivated water carbon filter.webp",
         stats: [
             { label: "Efficiency", value: 85, unit: "%", color: "#3b82f6" },
             { label: "Cost", value: 40, unit: "₹/kL", color: "#10b981" },
@@ -621,6 +687,7 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
             "Depends on electricity supply"
         ],
         visComponent: UVSterilizationVisual,
+        imagePath: "/report images/2.uv strlization of water to filiterate scientific diagram.webp",
         stats: [
             { label: "Kill Rate", value: 99.9, unit: "%", color: "#ef4444" },
             { label: "Power", value: 20, unit: "W", color: "#eab308" },
@@ -643,6 +710,7 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
             "Slow filtration process"
         ],
         visComponent: ReverseOsmosisVisual,
+        imagePath: "/report images/3.resverse osmisis.webp",
         stats: [
             { label: "Purity", value: 98, unit: "%", color: "#3b82f6" },
             { label: "Waste", value: 60, unit: "%", color: "#ef4444" },
@@ -656,6 +724,7 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
         benefits: ["Highly effective against bacteria/viruses", "Provides residual protection", "Very low cost and widely available"],
         drawbacks: ["Can change taste/odor", "Not effective against Cryptosporidium", "Potential by-products if organics present"],
         visComponent: ChlorinationVisual,
+        imagePath: "/report images/4.chlorination of water to filiterate scientific diagram.webp",
         stats: [
             { label: "Bacteria", value: 99, unit: "%", color: "#10b981" },
             { label: "Cost", value: 15, unit: "₹/kL", color: "#3b82f6" },
@@ -669,6 +738,7 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
         benefits: ["No chemicals needed", "Simple to perform anywhere", "Kills all classes of pathogens"],
         drawbacks: ["Uses fuel/energy", "Time consuming", "Does not remove chemical pollutants (metals, salts)"],
         visComponent: BoilingVisual,
+        imagePath: "/report images/5.boiling of water to filter scientific diagram.webp",
         stats: [
             { label: "Kill Rate", value: 100, unit: "%", color: "#ef4444" },
             { label: "Cost", value: 100, unit: "₹/kL", color: "#f97316" },
@@ -682,6 +752,7 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
         benefits: ["Removes bacteria and protozoa", "Long lifespan (cleanable)", "No electricity required"],
         drawbacks: ["Slow flow rate", "Does not remove viruses (too small)", "Fragile (can break)"],
         visComponent: CeramicFiltrationVisual,
+        imagePath: "/report images/7.cermaic water filter.webp",
         stats: [
             { label: "Bacteria", value: 99, unit: "%", color: "#3b82f6" },
             { label: "Cost", value: 30, unit: "₹/kL", color: "#10b981" },

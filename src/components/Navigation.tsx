@@ -24,8 +24,8 @@ const NavLink = ({
         className={cn(
             "flex items-center gap-2 px-6 py-2 rounded-full transition-all duration-300 group relative",
             isActive
-                ? "text-white"
-                : "text-zinc-400 hover:text-white hover:bg-white/5"
+                ? "text-blue-900 bg-blue-50"
+                : "text-zinc-500 hover:text-blue-900 hover:bg-zinc-100"
         )}
     >
         <Icon className={cn("w-4 h-4 transition-transform group-hover:scale-110", isActive && "text-blue-400")} />
@@ -89,22 +89,20 @@ export default function Navigation() {
                             damping: 30,
                             mass: 0.8
                         }}
-                        className="pointer-events-auto w-full bg-[#0B1121]/95 backdrop-blur-xl border-b border-blue-500/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+                        className="pointer-events-auto w-full bg-white/95 backdrop-blur-xl border-b border-zinc-200 shadow-sm"
                     >
                         <nav className="container mx-auto px-6 h-20 flex items-center justify-between font-swiss">
                             {/* Logo Section */}
                             <div className="flex items-center gap-4">
-                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-blue-500/20">
+                                <div className="relative w-48 h-12">
                                     <Image
-                                        src="/images/logo.jpeg"
+                                        src="/logo.svg"
                                         alt="BlueMonitor"
                                         fill
-                                        className="object-contain"
+                                        className="object-contain object-left"
+                                        priority
                                     />
                                 </div>
-                                <span className="font-bold text-xl tracking-tight text-white hidden sm:block">
-                                    BlueMonitor
-                                </span>
                             </div>
 
                             {/* Links Section */}
@@ -122,8 +120,8 @@ export default function Navigation() {
                             </div>
 
                             {/* Right Action (Optional - e.g. Profile or Clock) */}
-                            <div className="w-10 h-10 rounded-full bg-blue-900/20 flex items-center justify-center text-xs font-mono text-blue-200 border border-blue-400/20 shadow-inner">
-                                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse box-content border-2 border-[#0B1121]" />
+                            <div className="w-10 h-10 rounded-full bg-blue-50/50 flex items-center justify-center text-xs font-mono text-blue-900 border border-blue-100 shadow-inner">
+                                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse box-content border-2 border-white" />
                             </div>
                         </nav>
                     </motion.div>

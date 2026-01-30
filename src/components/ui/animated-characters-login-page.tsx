@@ -372,16 +372,15 @@ function AnimatedCharactersLoginPage() {
             <div className="relative hidden lg:flex flex-col justify-between bg-zinc-900 p-12 text-white overflow-hidden">
                 {/* Logo */}
                 <div className="relative z-20 flex items-center gap-2 text-lg font-semibold">
-                    <div className="size-8 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center overflow-hidden">
+                    <div className="h-12 w-48 bg-white/95 rounded-full px-4 flex items-center justify-center shadow-lg shadow-black/20 backdrop-blur-sm">
                         <Image
-                            src="/images/logo.jpeg"
+                            src="/logo.svg"
                             alt="Logo"
-                            width={32}
-                            height={32}
-                            className="object-cover"
+                            width={160}
+                            height={40}
+                            className="object-contain w-full h-full"
                         />
                     </div>
-                    <span>BlueMonitor</span>
                 </div>
 
                 {/* Characters Scene */}
@@ -570,16 +569,15 @@ function AnimatedCharactersLoginPage() {
                     {/* Mobile Header (Hidden on Desktop) */}
                     <div className="lg:hidden flex justify-center mb-8">
                         <div className="flex items-center gap-2 text-lg font-semibold text-zinc-900">
-                            <div className="size-8 rounded-lg bg-zinc-900 text-white flex items-center justify-center overflow-hidden">
+                            <div className="h-10 w-40 flex items-center justify-center text-zinc-900">
                                 <Image
-                                    src="/images/logo.jpeg"
+                                    src="/logo.svg"
                                     alt="Logo"
-                                    width={32}
-                                    height={32}
-                                    className="object-cover"
+                                    width={140}
+                                    height={36}
+                                    className="object-contain"
                                 />
                             </div>
-                            <span>BlueMonitor</span>
                         </div>
                     </div>
 
@@ -588,13 +586,13 @@ function AnimatedCharactersLoginPage() {
                         {/* Header */}
                         <div className="text-center mb-8">
                             {/* Optional Minimal Logo inside card */}
-                            <div className="inline-flex items-center justify-center size-16 rounded-full bg-zinc-100 mb-4 transition-transform hover:scale-105 duration-300 overflow-hidden">
+                            <div className="inline-flex items-center justify-center w-48 h-16 mb-6 transition-transform hover:scale-105 duration-300">
                                 <Image
-                                    src="/images/logo.jpeg"
+                                    src="/logo.svg"
                                     alt="Logo"
-                                    width={64}
-                                    height={64}
-                                    className="object-cover"
+                                    width={180}
+                                    height={60}
+                                    className="object-contain"
                                 />
                             </div>
 
