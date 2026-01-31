@@ -370,18 +370,7 @@ function AnimatedCharactersLoginPage() {
 
             {/* LEFT COLUMN: Animated Characters (Desktop Only) */}
             <div className="relative hidden lg:flex flex-col justify-between bg-zinc-900 p-12 text-white overflow-hidden">
-                {/* Logo */}
-                <div className="relative z-20 flex items-center gap-2 text-lg font-semibold">
-                    <div className="h-12 w-48 bg-white/95 rounded-full px-4 flex items-center justify-center shadow-lg shadow-black/20 backdrop-blur-sm">
-                        <Image
-                            src="/logo.svg"
-                            alt="Logo"
-                            width={160}
-                            height={40}
-                            className="object-contain w-full h-full"
-                        />
-                    </div>
-                </div>
+
 
                 {/* Characters Scene */}
                 <div className="relative z-20 flex items-end justify-center pb-12">
@@ -571,7 +560,7 @@ function AnimatedCharactersLoginPage() {
                         <div className="flex items-center gap-2 text-lg font-semibold text-zinc-900">
                             <div className="h-10 w-40 flex items-center justify-center text-zinc-900">
                                 <Image
-                                    src="/logo.svg"
+                                    src="/finallogo.svg"
                                     alt="Logo"
                                     width={140}
                                     height={36}
@@ -588,7 +577,7 @@ function AnimatedCharactersLoginPage() {
                             {/* Optional Minimal Logo inside card */}
                             <div className="inline-flex items-center justify-center w-48 h-16 mb-6 transition-transform hover:scale-105 duration-300">
                                 <Image
-                                    src="/logo.svg"
+                                    src="/cyanlogo.svg"
                                     alt="Logo"
                                     width={180}
                                     height={60}

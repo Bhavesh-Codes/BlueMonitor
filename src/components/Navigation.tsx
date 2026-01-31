@@ -94,9 +94,9 @@ export default function Navigation() {
                         <nav className="container mx-auto px-6 h-20 flex items-center justify-between font-swiss">
                             {/* Logo Section */}
                             <div className="flex items-center gap-4">
-                                <div className="relative w-48 h-12">
+                                <div className="relative w-32 h-12">
                                     <Image
-                                        src="/logo.svg"
+                                        src="/cyanlogo.svg"
                                         alt="BlueMonitor"
                                         fill
                                         className="object-contain object-left"

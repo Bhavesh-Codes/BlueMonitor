@@ -770,7 +770,8 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
             { label: "Clarity", value: 90, unit: "%", color: "#06b6d4" },
             { label: "Cost", value: 20, unit: "₹/kL", color: "#10b981" },
             { label: "Time", value: 4, unit: "hr", color: "#6366f1" },
-        ]
+        ],
+        imagePath: "/report images/6.flocculation.png"
     },
     "Distillation": {
         title: "Distillation",
@@ -796,7 +797,8 @@ export const TREATMENT_DETAILS: Record<string, TreatmentDetail> = {
             { label: "O2 Level", value: 100, unit: "%", color: "#0ea5e9" },
             { label: "Iron Rem", value: 80, unit: "%", color: "#f97316" },
             { label: "Cost", value: 10, unit: "₹/kL", color: "#10b981" },
-        ]
+        ],
+        imagePath: "/report images/8.aeration.png"
     },
     "pH Adjustment": {
         title: "pH Adjustment",

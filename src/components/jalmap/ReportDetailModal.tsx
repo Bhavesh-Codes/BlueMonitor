@@ -123,8 +123,16 @@ export default function ReportDetailModal({ report, isOpen, onClose }: ReportDet
 
     return (
         <>
-            <Dialog open={isOpen} onOpenChange={() => onClose()}>
-                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-background/95 backdrop-blur-lg border-border">
+            <Dialog open={isOpen} onOpenChange={(open) => {
+                if (!open) {
+                    // Reset treatment selection when closing the main modal
+                    setSelectedTreatment(null);
+                    onClose();
+                }
+            }}>
+                <DialogContent
+                    className="max-w-4xl max-h-[90vh] overflow-y-auto bg-background/95 backdrop-blur-lg border-border"
+                >
                     <DialogHeader className="pb-4 border-b border-border">
                         {/* Tier Badge Header */}
                         <div className="flex items-center justify-between">

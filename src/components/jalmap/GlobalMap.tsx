@@ -239,11 +239,14 @@ export default function GlobalMap() {
                 {flyToIndia && <FlyToLocation center={INDIA_CENTER} zoom={INDIA_ZOOM} />}
 
                 {/* Render tier markers */}
-                {filteredReports.map(report => (
+                {filteredReports.map((report, index) => (
                     <TierMarker
                         key={report.id}
                         position={[report.location.lat, report.location.lng]}
                         tier={report.calculated_tier}
+                        // Higher z-index for newer reports (lower index)
+                        // This ensures the most recent report is clickable when markers overlap
+                        zIndexOffset={2000 - index}
                         onClick={() => setSelectedReport(report)}
                     />
                 ))}
@@ -253,6 +256,7 @@ export default function GlobalMap() {
             <TierFilterPanel
                 activeFilters={activeFilters}
                 onFilterChange={handleFilterChange}
+                forceCollapsed={!!selectedReport}
             />
 
             {/* Report Count Badge */}

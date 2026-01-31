@@ -147,10 +147,8 @@ body {
   animation: pulse-danger 1.5s ease-in-out infinite;
 }
 
-/* Glow effect for danger markers */
-.marker-tier-5 svg path {
-  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
-}
+/* Glow effect moved to SVG filter in TierMarker.tsx to prevent rendering artifacts */
+/* .marker-tier-5 svg path { filter: ... } - Removed */
 
 /* Ensure leaflet popups/tooltips are styled consistently */
 .leaflet-popup-content-wrapper {

@@ -40,6 +40,20 @@ export default function WaterTreatmentDetailModal({
         }
     }, [isOpen, methodName]);
 
+    // Handle Escape key to close modal
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && isOpen) {
+                e.stopPropagation();
+                e.preventDefault();
+                onClose();
+            }
+        };
+        // Use capture phase to intercept before other handlers
+        window.addEventListener('keydown', handleKeyDown, true);
+        return () => window.removeEventListener('keydown', handleKeyDown, true);
+    }, [isOpen, onClose]);
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -49,7 +63,13 @@ export default function WaterTreatmentDetailModal({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={onClose}
+                        onClick={(e) => {
+                            // Only close on click directly on backdrop
+                            if (e.target === e.currentTarget) {
+                                e.stopPropagation();
+                                onClose();
+                            }
+                        }}
                         className="fixed inset-0 z-[60] bg-background/80 backdrop-blur-sm"
                     />
 
@@ -60,12 +80,23 @@ export default function WaterTreatmentDetailModal({
                         exit={{ scale: 0.9, opacity: 0, y: 50 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
                         className="fixed inset-0 z-[70] flex items-center justify-center p-4 pointer-events-none"
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onWheel={(e) => e.stopPropagation()}
                     >
-                        <div className="bg-card w-full max-w-6xl h-[90vh] rounded-[2rem] shadow-2xl border border-border overflow-hidden pointer-events-auto flex flex-col md:flex-row relative">
+                        <div
+                            className="bg-card w-full max-w-6xl h-[90vh] rounded-[2rem] shadow-2xl border border-border overflow-hidden pointer-events-auto flex flex-col md:flex-row relative"
+                            onClick={(e) => e.stopPropagation()}
+                            onMouseDown={(e) => e.stopPropagation()}
+                        >
 
                             {/* Close Button */}
                             <button
-                                onClick={onClose}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    onClose();
+                                }}
                                 className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/10 hover:bg-black/20 text-foreground/80 transition-colors"
                             >
                                 <X className="w-6 h-6" />
@@ -73,8 +104,9 @@ export default function WaterTreatmentDetailModal({
 
                             {/* LEFT COLUMN: Visuals (55% width, Scrollable) */}
                             <div
-                                className="w-full md:w-[55%] h-full bg-muted/30 p-6 flex flex-col overflow-y-auto"
+                                className="w-full md:w-[55%] h-[50vh] md:h-full bg-muted/30 p-6 flex flex-col overflow-y-auto shrink-0"
                                 ref={scrollRef}
+                                onWheel={(e) => e.stopPropagation()}
                             >
                                 {/* Header Section */}
                                 <div className="mb-8 z-10 relative">
@@ -120,7 +152,10 @@ export default function WaterTreatmentDetailModal({
                             </div>
 
                             {/* RIGHT COLUMN: Info & Stats (45% width) */}
-                            <div className="w-full md:w-[45%] h-full overflow-y-auto p-6 md:p-8 bg-card border-l border-border/50">
+                            <div
+                                className="w-full md:w-[45%] h-[50vh] md:h-full overflow-y-auto p-6 md:p-8 bg-card border-l border-border/50 shrink-0"
+                                onWheel={(e) => e.stopPropagation()}
+                            >
 
                                 {/* Stats Row */}
                                 <div className="grid grid-cols-3 gap-3 mb-8">
@@ -201,7 +236,16 @@ export default function WaterTreatmentDetailModal({
                                     </ResponsiveContainer>
                                 </div>
 
-                                <Button className="w-full rounded-xl font-bold" variant="outline" size="lg" onClick={onClose}>
+                                <Button
+                                    className="w-full rounded-xl font-bold"
+                                    variant="outline"
+                                    size="lg"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        onClose();
+                                    }}
+                                >
                                     Close Analysis
                                 </Button>
 

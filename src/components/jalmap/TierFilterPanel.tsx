@@ -4,12 +4,14 @@ import { motion } from 'framer-motion';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Filter, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getTierColor } from '@/lib/water-logic';
 
 interface TierFilterPanelProps {
     activeFilters: Set<number>;
     onFilterChange: (tier: number, enabled: boolean) => void;
+    /** When true, force the panel to be collapsed (e.g., when a modal is open) */
+    forceCollapsed?: boolean;
 }
 
 // Tier configuration for display
@@ -29,8 +31,15 @@ const TIER_CONFIG = [
  * - Color-coded tier indicators
  * - Collapsible on mobile
  */
-export default function TierFilterPanel({ activeFilters, onFilterChange }: TierFilterPanelProps) {
+export default function TierFilterPanel({ activeFilters, onFilterChange, forceCollapsed = false }: TierFilterPanelProps) {
     const [isExpanded, setIsExpanded] = useState(true);
+
+    // Collapse when forceCollapsed becomes true
+    useEffect(() => {
+        if (forceCollapsed) {
+            setIsExpanded(false);
+        }
+    }, [forceCollapsed]);
 
     return (
         <motion.div
@@ -65,7 +74,11 @@ export default function TierFilterPanel({ activeFilters, onFilterChange }: TierF
                             <span className="font-semibold text-sm text-foreground">Filter by Tier</span>
                         </div>
                         <button
-                            onClick={() => setIsExpanded(false)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setIsExpanded(false);
+                            }}
                             className="p-1 rounded-lg hover:bg-muted/50 transition-colors"
                             title="Collapse"
                         >
