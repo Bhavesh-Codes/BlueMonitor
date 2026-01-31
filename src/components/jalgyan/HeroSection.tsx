@@ -56,7 +56,7 @@ export function HeroSection() {
                         <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-sm font-semibold tracking-wider uppercase shadow-lg">
                             Global Goal
                         </div>
-                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-serif leading-tight drop-shadow-lg">
+                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg">
                             SDG-6: <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">
                                 Clean Water & Sanitation
@@ -76,7 +76,11 @@ export function HeroSection() {
                         viewport={{ once: true }}
                         className="text-center"
                     >
-                        <h2 className="text-3xl font-bold font-serif mb-2 drop-shadow-md">Key Targets</h2>
+                        <h2 className="text-3xl font-bold mb-2 drop-shadow-md">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">
+                                Key Targets
+                            </span>
+                        </h2>
                         <div className="h-1 w-24 bg-blue-300 mx-auto rounded-full shadow-lg"></div>
                     </motion.div>
 

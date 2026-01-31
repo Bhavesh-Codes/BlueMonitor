@@ -208,6 +208,17 @@ function AnimatedCharactersLoginPage() {
 
     const router = useRouter();
 
+    // Redirect if already logged in
+    useEffect(() => {
+        const checkExistingSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                router.push('/analyze');
+            }
+        };
+        checkExistingSession();
+    }, [router]);
+
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             setMouseX(e.clientX);
@@ -372,8 +383,11 @@ function AnimatedCharactersLoginPage() {
             <div className="relative hidden lg:flex flex-col justify-between bg-zinc-900 p-12 text-white overflow-hidden">
 
 
+                {/* Spacer for centering */}
+                <div />
+
                 {/* Characters Scene */}
-                <div className="relative z-20 flex items-end justify-center pb-12">
+                <div className="relative z-20 flex items-end justify-center">
                     <div className="relative" style={{ width: '550px', height: '400px' }}>
                         {/* Purple Character */}
                         <div

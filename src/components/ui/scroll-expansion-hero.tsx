@@ -179,7 +179,7 @@ const ScrollExpandMedia = ({
     return (
         <div
             ref={sectionRef}
-            className='transition-colors duration-700 ease-in-out overflow-x-hidden font-[family-name:var(--font-tilt-warp)]'
+            className='transition-colors duration-700 ease-in-out overflow-x-hidden'
         >
             <section className='relative flex flex-col items-center justify-start min-h-[100dvh]'>
                 <div className='relative w-full flex flex-col items-center min-h-[100dvh]'>
@@ -319,7 +319,7 @@ const ScrollExpandMedia = ({
                                 <div className='flex flex-col items-center text-center relative z-10 mt-4 transition-none'>
                                     {date && (
                                         <p
-                                            className='text-2xl text-blue-100 drop-shadow-md'
+                                            className='text-2xl text-blue-100 drop-shadow-md font-[family-name:var(--font-tilt-warp)]'
                                             style={{ transform: `translateX(-${textTranslateX}vw)` }}
                                         >
                                             {date}
@@ -327,7 +327,7 @@ const ScrollExpandMedia = ({
                                     )}
                                     {scrollToExpand && (
                                         <p
-                                            className='text-blue-100 font-bold text-2xl md:text-3xl text-center drop-shadow-lg mt-8'
+                                            className='text-blue-100 font-bold text-2xl md:text-3xl text-center drop-shadow-lg mt-8 font-[family-name:var(--font-tilt-warp)]'
                                             style={{ transform: `translateX(${textTranslateX}vw)` }}
                                         >
                                             {scrollToExpand}
@@ -341,13 +341,13 @@ const ScrollExpandMedia = ({
                                     }`}
                             >
                                 <motion.h2
-                                    className='text-5xl md:text-7xl lg:text-8xl font-bold text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] transition-none'
+                                    className='text-5xl md:text-7xl lg:text-8xl font-bold text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] transition-none mb-[230px] font-[family-name:var(--font-tilt-warp)]'
                                     style={{ x: `-${textTranslateX * 1.2}vw` }}
                                 >
                                     {firstWord}
                                 </motion.h2>
                                 <motion.h2
-                                    className='text-5xl md:text-7xl lg:text-8xl font-bold text-center text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] transition-none'
+                                    className='text-5xl md:text-7xl lg:text-8xl font-bold text-center text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] transition-none mt-[230px] font-[family-name:var(--font-tilt-warp)]'
                                     style={{ x: `${textTranslateX * 1.2}vw` }}
                                 >
                                     {restOfTitle}

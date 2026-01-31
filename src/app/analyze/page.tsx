@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabaseClient';
 import WaterInputForm from '@/components/jalscan/WaterInputForm';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Microscope, ClipboardList, ChevronDown, ChevronUp } from 'lucide-react';
+import { Microscope, ClipboardList, ChevronDown, ChevronUp, LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { User } from '@supabase/supabase-js';
 import Image from 'next/image';
 
@@ -57,6 +58,11 @@ export default function AnalyzePage() {
         );
     }
 
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.push('/');
+    };
+
     if (!user) return null;
 
     return (
@@ -68,18 +74,28 @@ export default function AnalyzePage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-8"
                 >
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20">
-                            <Microscope className="w-8 h-8 text-primary" />
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20">
+                                <Microscope className="w-8 h-8 text-primary" />
+                            </div>
+                            <div>
+                                <h1 className="text-3xl font-bold text-foreground">
+                                    JalScan Analysis
+                                </h1>
+                                <p className="text-muted-foreground">
+                                    Water Quality Assessment & Reporting Engine
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="text-3xl font-bold text-foreground">
-                                JalScan Analysis
-                            </h1>
-                            <p className="text-muted-foreground">
-                                Water Quality Assessment & Reporting Engine
-                            </p>
-                        </div>
+                        <Button
+                            onClick={handleLogout}
+                            variant="outline"
+                            className="flex items-center gap-2 text-muted-foreground hover:text-destructive hover:border-destructive/50 transition-colors"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            <span className="hidden sm:inline">Logout</span>
+                        </Button>
                     </div>
                 </motion.div>
 

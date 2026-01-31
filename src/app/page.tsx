@@ -14,15 +14,17 @@ export default function Home() {
       <ScrollExpandMedia
         mediaType="image"
         mediaSrc="/jalgyan%20images/deep-sea-hero.jpg"
-        bgImageSrc="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1920&auto=format&fit=crop"
+        bgImageSrc="/images/back.jpeg"
         overlayLogoSrc="/cyanlogo.svg"
         title="Monitoring today|Cleaner water tomorrow"
         date=""
-        scrollToExpand="Scroll to Explore"
+
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6 text-foreground">
-            Preserving Our Most Vital Resource
+          <h2 className="text-3xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 bg-clip-text text-transparent">
+              Preserving Our Most Vital Resource
+            </span>
           </h2>
           <p className="text-lg text-muted-foreground">
             Join the mission to monitor, analyze, and improve water quality across the globe.
@@ -49,7 +51,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-primary via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 bg-clip-text text-transparent">
                 The Survival Library
               </span>
             </h2>
