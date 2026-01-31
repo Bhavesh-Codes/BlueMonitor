@@ -74,6 +74,7 @@ const config: Config = {
 			},
 			fontFamily: {
 				swiss: ['"Helvetica Now Display"', 'Helvetica', 'Arial', 'sans-serif'],
+				brutal: ['var(--font-space-grotesk)', 'sans-serif'],
 			},
 		},
 	},

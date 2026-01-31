@@ -224,6 +224,7 @@ export default function GlobalMap() {
 
             {/* Map Container */}
             <MapContainer
+                key="jal-global-map-v1"
                 center={DEFAULT_CENTER}
                 zoom={DEFAULT_ZOOM}
                 scrollWheelZoom={true}

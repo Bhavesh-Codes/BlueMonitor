@@ -128,7 +128,7 @@ export function MicroplasticBody() {
                                 {/* Dot on Line */}
                                 <div className={`hidden md:block absolute top-1/2 ${index % 2 === 0 ? '-left-[44px]' : '-right-[44px]'} w-6 h-6 rounded-full bg-background border-4 border-primary z-20`} />
 
-                                <span className={`text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br ${event.color} opacity-20 absolute -top-10 md:-top-16 left-6 md:left-12 select-none`}>
+                                <span className={`text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br ${event.color} opacity-50 absolute -top-10 md:-top-16 left-6 md:left-12 select-none`}>
                                     {event.year}
                                 </span>
                                 <h3 className={`text-3xl font-bold mb-4 bg-gradient-to-r ${event.color} bg-clip-text text-transparent`}>
@@ -184,7 +184,7 @@ export function MicroplasticBody() {
                                     <motion.div
                                         key={i}
                                         initial={{ height: 0 }}
-                                        whileInView={{ height: `${Math.pow(i, 1.8) / 400 * 100}%` }} // Adjusted calc for less overflow
+                                        whileInView={{ height: `${5 + (Math.pow(i, 2.2) / Math.pow(19, 2.2)) * 90}%` }} // Adjusted to 5% base + exponential growth up to ~95%
                                         viewport={{ once: true }}
                                         transition={{ duration: 1, delay: i * 0.05 }}
                                         className="flex-1 bg-gradient-to-t from-blue-500 to-cyan-300 rounded-t-sm opacity-80 hover:opacity-100 transition-opacity"

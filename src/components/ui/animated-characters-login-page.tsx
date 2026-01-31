@@ -18,6 +18,8 @@ interface PupilProps {
     pupilColor?: string;
     forceLookX?: number;
     forceLookY?: number;
+    mouseX: number;
+    mouseY: number;
 }
 
 const Pupil = ({
@@ -25,24 +27,11 @@ const Pupil = ({
     maxDistance = 5,
     pupilColor = "black",
     forceLookX,
-    forceLookY
+    forceLookY,
+    mouseX,
+    mouseY
 }: PupilProps) => {
-    const [mouseX, setMouseX] = useState<number>(0);
-    const [mouseY, setMouseY] = useState<number>(0);
     const pupilRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            setMouseX(e.clientX);
-            setMouseY(e.clientY);
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-        };
-    }, []);
 
     const [pupilPosition, setPupilPosition] = useState({ x: 0, y: 0 });
 
@@ -97,6 +86,8 @@ interface EyeBallProps {
     isBlinking?: boolean;
     forceLookX?: number;
     forceLookY?: number;
+    mouseX: number;
+    mouseY: number;
 }
 
 const EyeBall = ({
@@ -107,24 +98,11 @@ const EyeBall = ({
     pupilColor = "black",
     isBlinking = false,
     forceLookX,
-    forceLookY
+    forceLookY,
+    mouseX,
+    mouseY
 }: EyeBallProps) => {
-    const [mouseX, setMouseX] = useState<number>(0);
-    const [mouseY, setMouseY] = useState<number>(0);
     const eyeRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            setMouseX(e.clientX);
-            setMouseY(e.clientY);
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-        };
-    }, []);
 
     const [pupilPosition, setPupilPosition] = useState({ x: 0, y: 0 });
 
@@ -424,6 +402,8 @@ function AnimatedCharactersLoginPage() {
                                     isBlinking={isPurpleBlinking}
                                     forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
                                     forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
+                                    mouseX={mouseX}
+                                    mouseY={mouseY}
                                 />
                                 <EyeBall
                                     size={18}
@@ -434,6 +414,8 @@ function AnimatedCharactersLoginPage() {
                                     isBlinking={isPurpleBlinking}
                                     forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
                                     forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
+                                    mouseX={mouseX}
+                                    mouseY={mouseY}
                                 />
                             </div>
                         </div>
@@ -475,6 +457,8 @@ function AnimatedCharactersLoginPage() {
                                     isBlinking={isBlackBlinking}
                                     forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
                                     forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
+                                    mouseX={mouseX}
+                                    mouseY={mouseY}
                                 />
                                 <EyeBall
                                     size={16}
@@ -485,6 +469,8 @@ function AnimatedCharactersLoginPage() {
                                     isBlinking={isBlackBlinking}
                                     forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
                                     forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
+                                    mouseX={mouseX}
+                                    mouseY={mouseY}
                                 />
                             </div>
                         </div>
@@ -511,8 +497,8 @@ function AnimatedCharactersLoginPage() {
                                     top: (password.length > 0 && showPassword) ? `${85}px` : `${90 + (orangePos.faceY || 0)}px`,
                                 }}
                             >
-                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
-                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
+                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} mouseX={mouseX} mouseY={mouseY} />
+                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} mouseX={mouseX} mouseY={mouseY} />
                             </div>
                         </div>
 
@@ -538,8 +524,8 @@ function AnimatedCharactersLoginPage() {
                                     top: (password.length > 0 && showPassword) ? `${35}px` : `${40 + (yellowPos.faceY || 0)}px`,
                                 }}
                             >
-                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
-                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
+                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} mouseX={mouseX} mouseY={mouseY} />
+                                <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} mouseX={mouseX} mouseY={mouseY} />
                             </div>
                             <div
                                 className="absolute w-20 h-[4px] bg-[#2D2D2D] rounded-full transition-all duration-200 ease-out"

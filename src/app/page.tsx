@@ -3,7 +3,7 @@
 import ScrollExpandMedia from '@/components/ui/scroll-expansion-hero';
 import { HeroSection } from '@/components/jalgyan/HeroSection';
 import { MicroplasticBody } from '@/components/jalgyan/MicroplasticBody';
-
+import { CaseStudies } from '@/components/jalgyan/CaseStudies';
 import { VideoLibrary } from '@/components/jalgyan/VideoLibrary';
 import { motion } from 'framer-motion';
 
@@ -39,7 +39,6 @@ export default function Home() {
       {/* Microplastic Crisis - Scrollytelling Section */}
       <MicroplasticBody />
 
-      {/* Survival Library Section */}
       <section className="relative bg-gradient-to-b from-background via-primary/5 to-background py-20">
         <div className="container mx-auto px-4">
           {/* Section Header */}
@@ -73,6 +72,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Crisis Archive - Real-world Case Studies */}
+      <CaseStudies />
 
 
     </div>

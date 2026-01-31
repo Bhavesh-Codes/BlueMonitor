@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display, Tilt_Warp } from 'next/font/google';
+import { Inter, Playfair_Display, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import Navigation from '@/components/Navigation';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
-const tiltWarp = Tilt_Warp({ subsets: ['latin'], variable: '--font-tilt-warp' });
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' });
 
 export const metadata: Metadata = {
   title: 'BlueMonitor Intelligence',
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={cn("min-h-screen bg-background font-sans antialiased text-white", inter.variable, playfair.variable, tiltWarp.variable)}>
+      <body className={cn("min-h-screen bg-background font-sans antialiased text-white", inter.variable, playfair.variable, spaceGrotesk.variable)}>
         <Navigation />
         <main>{children}</main>
       </body>

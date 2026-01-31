@@ -65,6 +65,19 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-weight: 700;
+  /* Default to bold for brutalist look */
+  letter-spacing: -0.02em;
+  /* Tight tracking is common in neo-brutalism */
+}
+
 /* Leaflet map styles */
 .leaflet-container {
   width: 100%;

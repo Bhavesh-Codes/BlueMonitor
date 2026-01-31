@@ -33,19 +33,22 @@ export default function MapPage() {
             <Navigation />
 
             {/* Page Header */}
-            <div className="flex-shrink-0 px-4 py-3 bg-gradient-to-r from-primary/10 via-background to-primary/5 border-b border-border">
+            <div className="flex-shrink-0 px-6 py-4 bg-white border-b border-gray-200 shadow-sm z-10 relative">
                 <div className="max-w-screen-2xl mx-auto flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-xl bg-primary/10 border border-primary/20">
-                            <MapPin className="w-5 h-5 text-primary" />
+                    <div className="flex items-center gap-4">
+                        <div className="p-2.5 rounded-lg bg-blue-600 shadow-sm text-white">
+                            <MapPin className="w-5 h-5" />
                         </div>
                         <div>
-                            <h1 className="text-lg font-bold text-foreground">JalMap</h1>
-                            <p className="text-xs text-muted-foreground">Global Water Intelligence</p>
+                            <h1 className="text-xl font-bold text-gray-900 leading-none">JalMap</h1>
+                            <p className="text-xs font-medium text-gray-500 mt-1 uppercase tracking-wider">Global Water Intelligence</p>
                         </div>
                     </div>
-                    <div className="text-xs text-muted-foreground hidden sm:block">
-                        Click any marker to view detailed analysis
+
+                    <div className="flex items-center gap-4">
+                        <div className="text-xs font-medium text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-200 hidden sm:block">
+                            Click markers for analysis
+                        </div>
                     </div>
                 </div>
             </div>
