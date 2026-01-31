@@ -198,13 +198,27 @@ function AnimatedCharactersLoginPage() {
     }, [router]);
 
     useEffect(() => {
+        let animationFrameId: number;
+
         const handleMouseMove = (e: MouseEvent) => {
-            setMouseX(e.clientX);
-            setMouseY(e.clientY);
+            // Cancel previous frame to ensure we only process the latest event per frame
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+
+            animationFrameId = requestAnimationFrame(() => {
+                setMouseX(e.clientX);
+                setMouseY(e.clientY);
+            });
         };
 
         window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+        };
     }, []);
 
     // Blinking effect for purple character

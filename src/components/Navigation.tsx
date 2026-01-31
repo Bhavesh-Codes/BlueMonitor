@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { LayoutGrid, Microscope, Map as MapIcon } from 'lucide-react';
+import { supabase } from '@/lib/supabaseClient';
 
 const NavLink = ({
     href,
@@ -46,6 +47,23 @@ export default function Navigation() {
     const [isVisible, setIsVisible] = useState(false);
     const pathname = usePathname();
     const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
+
+    useEffect(() => {
+        const getUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user?.email) {
+                setUserEmail(user.email);
+            }
+        };
+        getUser();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUserEmail(session?.user?.email ?? null);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
 
     const handleMouseEnter = () => {
         if (closeTimeoutRef.current) {
@@ -120,8 +138,15 @@ export default function Navigation() {
                             </div>
 
                             {/* Right Action (Optional - e.g. Profile or Clock) */}
-                            <div className="w-10 h-10 rounded-full bg-blue-50/50 flex items-center justify-center text-xs font-mono text-blue-900 border border-blue-100 shadow-inner">
-                                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse box-content border-2 border-white" />
+                            <div className="flex items-center gap-3">
+                                {userEmail && (
+                                    <span className="text-[10px] font-mono text-zinc-500 opacity-70 hidden sm:block lowercase">
+                                        {userEmail}
+                                    </span>
+                                )}
+                                <div className="w-10 h-10 rounded-full bg-blue-50/50 flex items-center justify-center text-xs font-mono text-blue-900 border border-blue-100 shadow-inner">
+                                    <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse box-content border-2 border-white" />
+                                </div>
                             </div>
                         </nav>
                     </motion.div>

@@ -228,7 +228,7 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
         for (let i = 0; i <= 100; i += 2) {
             setAnalysisProgress(i);
             // Non-linear delay for realism
-            const delay = i < 80 ? 30 : 50;
+            const delay = i < 80 ? 45 : 75;
             await new Promise(resolve => setTimeout(resolve, delay));
         }
 
@@ -460,6 +460,9 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
                                 <h3 className="text-2xl font-bold animate-pulse">
                                     Analyzing Water Quality...
                                 </h3>
+                                <p className="text-sm text-primary font-medium">
+                                    AI Model is analyzing data patterns...
+                                </p>
 
                                 <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                                     <motion.div
@@ -540,9 +543,16 @@ export default function WaterInputForm({ onReportGenerated }: WaterInputFormProp
                                             </div>
 
                                             <div className="text-right hidden md:block">
-                                                <div className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-1">Limiting Factor</div>
-                                                <div className="text-xl font-bold text-destructive flex items-center justify-end gap-2">
-                                                    <AlertTriangle className="w-5 h-5" />
+                                                <div className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-1">
+                                                    {result.classification.limitingFactor === 'All parameters optimal' ? 'Analysis Status' : 'Limiting Factor'}
+                                                </div>
+                                                <div className={`text-xl font-bold flex items-center justify-end gap-2 ${result.classification.limitingFactor === 'All parameters optimal' ? 'text-green-500' : 'text-destructive'
+                                                    }`}>
+                                                    {result.classification.limitingFactor === 'All parameters optimal' ? (
+                                                        <CheckCircle2 className="w-5 h-5" />
+                                                    ) : (
+                                                        <AlertTriangle className="w-5 h-5" />
+                                                    )}
                                                     {result.classification.limitingFactor}
                                                 </div>
                                             </div>
