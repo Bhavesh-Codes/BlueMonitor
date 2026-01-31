@@ -33,14 +33,12 @@ const Pupil = ({
 }: PupilProps) => {
     const pupilRef = useRef<HTMLDivElement>(null);
 
-    const [pupilPosition, setPupilPosition] = useState({ x: 0, y: 0 });
-
     useEffect(() => {
         if (!pupilRef.current) return;
 
         // If forced look direction is provided, use that instead of mouse tracking
         if (forceLookX !== undefined && forceLookY !== undefined) {
-            setPupilPosition({ x: forceLookX, y: forceLookY });
+            pupilRef.current.style.transform = `translate(${forceLookX}px, ${forceLookY}px)`;
             return;
         }
 
@@ -56,7 +54,7 @@ const Pupil = ({
         const x = Math.cos(angle) * distance;
         const y = Math.sin(angle) * distance;
 
-        setPupilPosition({ x, y });
+        pupilRef.current.style.transform = `translate(${x}px, ${y}px)`;
     }, [mouseX, mouseY, forceLookX, forceLookY, maxDistance]);
 
     return (
@@ -67,7 +65,7 @@ const Pupil = ({
                 width: `${size}px`,
                 height: `${size}px`,
                 backgroundColor: pupilColor,
-                transform: `translate(${pupilPosition.x}px, ${pupilPosition.y}px)`,
+                transform: `translate(0px, 0px)`, // Initial position
                 transition: 'transform 0.1s ease-out',
             }}
         />
@@ -103,15 +101,14 @@ const EyeBall = ({
     mouseY
 }: EyeBallProps) => {
     const eyeRef = useRef<HTMLDivElement>(null);
-
-    const [pupilPosition, setPupilPosition] = useState({ x: 0, y: 0 });
+    const pupilRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!eyeRef.current) return;
+        if (!eyeRef.current || !pupilRef.current) return;
 
         // If forced look direction is provided, use that instead of mouse tracking
         if (forceLookX !== undefined && forceLookY !== undefined) {
-            setPupilPosition({ x: forceLookX, y: forceLookY });
+            pupilRef.current.style.transform = `translate(${forceLookX}px, ${forceLookY}px)`;
             return;
         }
 
@@ -127,8 +124,8 @@ const EyeBall = ({
         const x = Math.cos(angle) * distance;
         const y = Math.sin(angle) * distance;
 
-        setPupilPosition({ x, y });
-    }, [mouseX, mouseY, forceLookX, forceLookY, maxDistance]);
+        pupilRef.current.style.transform = `translate(${x}px, ${y}px)`;
+    }, [mouseX, mouseY, forceLookX, forceLookY, maxDistance, isBlinking]);
 
     return (
         <div
@@ -143,12 +140,13 @@ const EyeBall = ({
         >
             {!isBlinking && (
                 <div
+                    ref={pupilRef}
                     className="rounded-full"
                     style={{
                         width: `${pupilSize}px`,
                         height: `${pupilSize}px`,
                         backgroundColor: pupilColor,
-                        transform: `translate(${pupilPosition.x}px, ${pupilPosition.y}px)`,
+                        transform: `translate(0px, 0px)`, // Initial position
                         transition: 'transform 0.1s ease-out',
                     }}
                 />
