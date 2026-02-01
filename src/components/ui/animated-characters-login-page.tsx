@@ -353,7 +353,7 @@ function AnimatedCharactersLoginPage() {
 
                 if (error) throw error;
 
-                setMessage('Confirmation email sent! Please check your inbox.');
+                setMessage('Account created successfully');
                 setEmail("");
                 setPassword("");
             }
